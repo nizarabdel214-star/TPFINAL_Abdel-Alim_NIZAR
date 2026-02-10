@@ -1,0 +1,32 @@
+import os
+
+path = input("Chemin du répertoire à analyser (fullpath) : ")
+
+if not os.path.isdir(path):
+    print("Erreur : le chemin donné n'est pas un répertoire.")
+    exit()
+
+nb_rep = 0
+nb_exec = 0
+nb_files = 0
+
+for entry in os.listdir(path):
+    full_entry = os.path.join(path, entry)
+
+    # Si dossier
+    if os.path.isdir(full_entry):
+        nb_rep += 1
+
+    # Si fichier
+    elif os.path.isfile(full_entry):
+        if os.access(full_entry, os.X_OK):  
+            nb_exec += 1
+        else:
+            nb_files += 1
+
+# Affichage final
+print("\n--- Résultat de l'analyse ---")
+print("Répertoire analysé :", path)
+print("Nombre de répertoires :", nb_rep)
+print("Nombre de fichiers exécutables :", nb_exec)
+print("Nombre de fichiers non exécutables :", nb_files)

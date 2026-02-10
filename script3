@@ -1,0 +1,28 @@
+import os
+nom_fichier = input("Nom du fichier à rechercher : ")
+
+base = os.getcwd()
+occ = 0
+
+for item in os.listdir(base):
+    if item == nom_fichier:
+        occ += 1
+
+for dossier in os.listdir(base):
+    chemin = os.path.join(base, dossier)
+    if os.path.isdir(chemin):
+        for item in os.listdir(chemin):
+            if item == nom_fichier:
+                occ += 1
+
+for dossier in os.listdir(base):
+    chemin1 = os.path.join(base, dossier)
+    if os.path.isdir(chemin1):
+        for sous in os.listdir(chemin1):
+            chemin2 = os.path.join(chemin1, sous)
+            if os.path.isdir(chemin2):
+                for item in os.listdir(chemin2):
+                    if item == nom_fichier:
+                        occ += 1
+
+print("Nombre d'occurrences de", nom_fichier, ":", occ)

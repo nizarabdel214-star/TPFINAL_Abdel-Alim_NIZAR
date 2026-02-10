@@ -1,0 +1,7 @@
+
+nom_script = "abdelou"
+
+arguments = ["je", "suis", "algerien"]
+
+print("mon nom :", nom_script)
+print("mes arguments :", " ".join(arguments))

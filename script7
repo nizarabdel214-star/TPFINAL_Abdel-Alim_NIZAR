@@ -1,0 +1,28 @@
+import random
+
+def create_random_file(filename):
+    """Crée un fichier avec 1000 nombres aléatoires entre 0 et 10000."""
+    with open(filename, "w") as f:
+        for _ in range(1000):
+            number = random.randint(0, 10000)
+            f.write(f"{number}\n")
+    print(f"Fichier '{filename}' créé avec 1000 nombres aléatoires.")
+
+def main():
+    # Demander à l'utilisateur les noms de fichiers séparés par des espaces
+    user_input = input("Entrez les noms de fichiers .txt à créer, séparés par un espace : ").strip()
+    
+    if not user_input:
+        print("Aucun fichier saisi. Fin du programme.")
+        return
+
+    filenames = user_input.split()
+    
+    for filename in filenames:
+        if not filename.endswith(".txt"):
+            print(f"Attention : '{filename}' n'est pas un fichier .txt. Ignoré.")
+            continue
+        create_random_file(filename)
+
+if __name__ == "__main__":
+    main()

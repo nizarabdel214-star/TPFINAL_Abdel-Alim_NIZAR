@@ -1,0 +1,50 @@
+
+
+MAX_ATTEMPTS = 5
+
+def load_users():
+    """Charge les utilisateurs et mots de passe depuis les fichiers."""
+    try:
+        with open("User.txt", "r") as f:
+            users = [line.strip() for line in f.readlines()]
+    except FileNotFoundError:
+        print("Fichier User.txt introuvable.")
+        return []
+
+    try:
+        with open("Pass.txt", "r") as f:
+            passwords = [line.strip() for line in f.readlines()]
+    except FileNotFoundError:
+        print("Fichier Pass.txt introuvable.")
+        return []
+
+    if len(users) != len(passwords):
+        print("Erreur : le nombre d'utilisateurs et de mots de passe ne correspond pas.")
+        return []
+
+    return dict(zip(users, passwords))
+
+def authenticate(users_dict):
+    """Demande le nom d'utilisateur et le mot de passe, avec un max de tentatives."""
+    attempts = 0
+    while attempts < MAX_ATTEMPTS:
+        username = input("Nom d'utilisateur : ")
+        password = input("Mot de passe : ")
+
+        if username in users_dict and users_dict[username] == password:
+            print(f"Bienvenue {username} !")
+            return True
+        else:
+            attempts += 1
+            print(f"Identifiant ou mot de passe incorrect. Tentatives restantes : {MAX_ATTEMPTS - attempts}")
+
+    print("Nombre maximum de tentatives atteint. Accès refusé.")
+    return False
+
+def main():
+    users_dict = load_users()
+    if users_dict:
+        authenticate(users_dict)
+
+if __name__ == "__main__":
+    main()

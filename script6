@@ -1,0 +1,36 @@
+import os
+
+def get_all_filenames(directory):
+    """
+    Récupère tous les noms de fichiers dans un répertoire et ses sous-répertoires.
+    Renvoie un ensemble de noms de fichiers uniquement (sans les chemins).
+    """
+    filenames = set()
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            filenames.add(file)
+    return filenames
+
+def main():
+    # Demande à l'utilisateur les chemins des deux répertoires
+    dir1 = input("Entrez le chemin du premier répertoire : ").strip()
+    dir2 = input("Entrez le chemin du deuxième répertoire : ").strip()
+
+    if not os.path.isdir(dir1) or not os.path.isdir(dir2):
+        print("Erreur : les deux chemins doivent être des répertoires valides.")
+        return
+
+    files_dir1 = get_all_filenames(dir1)
+    files_dir2 = get_all_filenames(dir2)
+
+    common_files = files_dir1.intersection(files_dir2)
+
+    if common_files:
+        print("\nFichiers communs :")
+        for f in sorted(common_files):
+            print(f)
+    else:
+        print("\nAucun fichier commun trouvé.")
+
+if __name__ == "__main__":
+    main()

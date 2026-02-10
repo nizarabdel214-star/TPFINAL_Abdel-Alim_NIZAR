@@ -1,0 +1,94 @@
+import os
+import mimetypes
+
+def create_file():
+    filename = input("Entrez le nom du fichier à créer : ").strip()
+    if not filename:
+        print("Erreur : Aucun nom de fichier fourni.")
+        return
+    try:
+        with open(filename, 'x') as f:
+            print(f"Fichier '{filename}' créé avec succès.")
+    except FileExistsError:
+        print(f"Erreur : Le fichier '{filename}' existe déjà.")
+    except Exception as e:
+        print(f"Erreur lors de la création du fichier : {e}")
+
+def read_file():
+    filename = input("Entrez le nom du fichier à lire : ").strip()
+    while not os.path.isfile(filename):
+        print(f"Le fichier '{filename}' n'existe pas.")
+        filename = input("Veuillez entrer un nom de fichier correct : ").strip()
+    try:
+        with open(filename, 'r') as f:
+            print(f"\nContenu de '{filename}':\n{'-'*30}\n{f.read()}\n{'-'*30}")
+    except Exception as e:
+        print(f"Erreur lors de la lecture : {e}")
+
+def append_to_file():
+    filename = input("Entrez le nom du fichier à modifier : ").strip()
+    if not os.path.isfile(filename):
+        print(f"Erreur : Le fichier '{filename}' n'existe pas.")
+        return
+    data = input("Entrez les données à ajouter (ou le nom d'un fichier existant) : ").strip()
+    try:
+        if os.path.isfile(data):
+            with open(data, 'r') as df, open(filename, 'a') as f:
+                f.write(df.read())
+                print(f"Contenu du fichier '{data}' ajouté à '{filename}'.")
+        else:
+            with open(filename, 'a') as f:
+                f.write(data)
+                print(f"Données ajoutées à '{filename}'.")
+    except Exception as e:
+        print(f"Erreur lors de l'ajout : {e}")
+
+def delete_file():
+    filename = input("Entrez le nom du fichier à supprimer : ").strip()
+    if not os.path.isfile(filename):
+        print(f"Erreur : Le fichier '{filename}' n'existe pas.")
+        return
+    try:
+        os.remove(filename)
+        print(f"Fichier '{filename}' supprimé avec succès.")
+    except Exception as e:
+        print(f"Erreur lors de la suppression : {e}")
+
+def check_file_type():
+    filename = input("Entrez le nom du fichier à analyser : ").strip()
+    if not os.path.isfile(filename):
+        print(f"Erreur : Le fichier '{filename}' n'existe pas.")
+        return
+    type_guess, _ = mimetypes.guess_type(filename)
+    print(f"Le type du fichier '{filename}' est : {type_guess or 'Inconnu'}")
+
+def main():
+    while True:
+        print("\nOptions disponibles :")
+        print("  c - Créer un fichier")
+        print("  r - Lire un fichier")
+        print("  a - Ajouter des données à un fichier")
+        print("  d - Supprimer un fichier")
+        print("  t - Vérifier le type d'un fichier")
+        print("  q - Quitter")
+
+        choice = input("Choisissez une option : ").strip().lower()
+
+        if choice == 'c':
+            create_file()
+        elif choice == 'r':
+            read_file()
+        elif choice == 'a':
+            append_to_file()
+        elif choice == 'd':
+            delete_file()
+        elif choice == 't':
+            check_file_type()
+        elif choice == 'q':
+            print("Au revoir !")
+            break
+        else:
+            print("Option invalide. Veuillez réessayer.")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,28 @@
+import getpass
+from datetime import datetime
+
+def main():
+    
+    texte = input("Entrez le texte à afficher : ")
+
+
+    utilisateur = getpass.getuser()
+    heure = datetime.now().strftime("%H:%M:%S")
+
+
+    largeur_cadre = max(len(texte), len(utilisateur), len(heure)) + 10  # marge
+    ligne_top = "*" * largeur_cadre
+    ligne_vide = "*" + " " * (largeur_cadre - 2) + "*"
+
+    print(ligne_top)
+    print(ligne_vide)
+    print(ligne_vide)
+    print("*" + " " * ((largeur_cadre - 2 - len(texte)) // 2) + texte + " " * ((largeur_cadre - 2 - len(texte) + 1) // 2) + "*")
+    print(ligne_vide)
+    print("*" + " " * ((largeur_cadre - 2 - len(utilisateur)) // 2) + utilisateur + " " * ((largeur_cadre - 2 - len(utilisateur) + 1) // 2) + "*")
+    print(ligne_vide)
+    print("*" + " " * ((largeur_cadre - 2 - len(heure)) // 2) + heure + " " * ((largeur_cadre - 2 - len(heure) + 1) // 2) + "*")
+    print(ligne_top)
+
+if __name__ == "__main__":
+    main()
